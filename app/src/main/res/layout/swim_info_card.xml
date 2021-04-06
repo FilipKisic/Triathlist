@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardBackgroundColor="@color/colorPrimaryDark">
+
+    <!--Use RelativeLayout instead of LinearLayout-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/card_margin_bottom"
+        android:background="@drawable/card_background"
+        android:orientation="vertical"
+        android:padding="@dimen/swim_info_card_padding">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="@dimen/swim_image_size"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:src="@drawable/swimming" />
+
+            <TextView
+                android:id="@+id/tvDayOfWeek"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="2"
+                android:fontFamily="@font/sf_ui_display_bold"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/day_in_week_text_size"
+                tools:text="Tuesday" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="@dimen/image_size"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:src="@drawable/calories" />
+
+            <TextView
+                android:id="@+id/tvLapCount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:fontFamily="@font/sf_ui_display_regular"
+                android:textColor="@color/white"
+                android:textSize="@dimen/info_text_size"
+                tools:text="622 cal" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/info_row_padding_top"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvTime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:fontFamily="@font/sf_ui_display_bold"
+                android:paddingStart="@dimen/info_time_padding"
+                android:textColor="@color/white"
+                android:textSize="@dimen/info_time_text_size"
+                tools:text="01:12:45" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="@dimen/image_size"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:src="@drawable/length" />
+
+            <TextView
+                android:id="@+id/tvDistance"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:fontFamily="@font/sf_ui_display_regular"
+                android:textColor="@color/white"
+                android:textSize="@dimen/info_text_size"
+                tools:text="2000 m" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    android:keepScreenOn="true"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/activity_padding">
+
+        <ProgressBar
+            android:id="@+id/pb_swim_goal"
+            android:layout_width="320dp"
+            android:layout_height="320dp"
+            android:indeterminateOnly="false"
+            android:progressDrawable="@drawable/circular_progress_bar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:progress="75" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/swimming"
+            app:layout_constraintBottom_toBottomOf="@+id/pb_swim_goal"
+            app:layout_constraintEnd_toEndOf="@+id/pb_swim_goal"
+            app:layout_constraintStart_toStartOf="@+id/pb_swim_goal"
+            app:layout_constraintTop_toTopOf="@+id/pb_swim_goal" />
+
+        <TextView
+            android:id="@+id/tvStopwatch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sf_ui_display_bold"
+            android:gravity="center"
+            android:text="@string/start_time"
+            android:textColor="@color/white"
+            android:textSize="@dimen/info_time_text_size"
+            app:layout_constraintTop_toBottomOf="@+id/pb_swim_goal"
+            tools:layout_editor_absoluteX="20dp" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/card_background"
+            android:orientation="vertical"
+            android:padding="@dimen/session_details_padding"
+            app:layout_constraintTop_toBottomOf="@+id/tvStopwatch"
+            tools:layout_editor_absoluteX="20dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/card_margin_bottom">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sf_ui_display_bold"
+                    android:text="@string/total_length"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/goal_value_text_size" />
+
+                <TextView
+                    android:id="@+id/tvTotalLength"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:fontFamily="@font/sf_ui_display_bold"
+                    android:text="@string/start_total_distance"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/goal_value_text_size" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/card_margin_bottom">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sf_ui_display_bold"
+                    android:text="@string/laps"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/goal_value_text_size" />
+
+                <TextView
+                    android:id="@+id/tvLaps"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:fontFamily="@font/sf_ui_display_bold"
+                    android:text="@string/start_lap"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/goal_value_text_size" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/card_margin_bottom">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sf_ui_display_bold"
+                    android:text="@string/to_go"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/goal_value_text_size" />
+
+                <TextView
+                    android:id="@+id/tvToGo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:fontFamily="@font/sf_ui_display_bold"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/goal_value_text_size"
+                    tools:text="500m" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/card_margin_bottom">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sf_ui_display_bold"
+                    android:text="@string/pause"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/goal_value_text_size" />
+
+                <TextView
+                    android:id="@+id/tvPause"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:fontFamily="@font/sf_ui_display_bold"
+                    android:text="@string/start_pause"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/goal_value_text_size" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+            tools:layout_editor_absoluteX="20dp">
+
+            <hr.algebra.triathlist.components.ActionButton
+                android:id="@+id/btnStartStop"
+                android:layout_width="@dimen/button_width"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/button_margin_top"
+                app:background_color="@drawable/button_background_blue"
+                app:button_text="@string/start" />
+
+            <hr.algebra.triathlist.components.ActionButton
+                android:id="@+id/btnFinish"
+                android:layout_width="@dimen/button_width"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/finish_margin_start"
+                android:layout_marginTop="@dimen/button_margin_top"
+                android:layout_alignParentEnd="true"
+                app:button_text="Finish" />
+        </RelativeLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

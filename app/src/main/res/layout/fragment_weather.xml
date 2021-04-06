@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimaryDark"
+        android:orientation="vertical"
+        android:padding="@dimen/activity_padding">
+
+        <TextView
+            android:id="@+id/tvWeatherTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sf_ui_display_bold"
+            android:text="@string/weather"
+            android:textColor="@color/colorAccentYellow"
+            android:textSize="@dimen/title_text_size" />
+
+        <TextView
+            android:id="@+id/tvCityName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvWeatherTitle"
+            android:fontFamily="@font/sf_ui_display_bold"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            tools:text="Zagreb" />
+
+        <TextView
+            android:id="@+id/tvTemperature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvWeatherTitle"
+            android:layout_alignParentEnd="true"
+            android:fontFamily="@font/sf_ui_display_bold"
+            android:textColor="@color/white"
+            android:textSize="60sp"
+            tools:text="12°C" />
+
+        <TextView
+            android:id="@+id/tvFeelsLike"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvTemperature"
+            android:layout_alignStart="@id/tvTemperature"
+            android:fontFamily="@font/sf_ui_display_regular"
+            android:textColor="@color/white"
+            android:textSize="@dimen/small_text_size"
+            tools:text="Feels like 10°C" />
+
+        <TextView
+            android:id="@+id/tvDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvTemperature"
+            android:fontFamily="@font/sf_ui_display_regular"
+            android:textColor="@color/white"
+            android:textSize="@dimen/session_goal_unit_text_size"
+            tools:text="Clear sky" />
+
+    </RelativeLayout>
+
+</FrameLayout>

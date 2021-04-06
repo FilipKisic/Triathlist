@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/card_margin_bottom"
+        android:background="@drawable/card_background"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/session_goal_padding"
+        android:paddingTop="@dimen/session_goal_padding"
+        android:paddingRight="@dimen/session_goal_padding"
+        android:paddingBottom="@dimen/session_goal_padding">
+
+        <EditText
+            android:id="@+id/etInput"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/input_background"
+            android:fontFamily="@font/sf_ui_display_bold"
+            android:inputType="number"
+            android:text="@string/session_goal_default_value"
+            android:textColor="@color/white"
+            android:textSize="@dimen/goal_value_text_size" />
+
+        <TextView
+            android:id="@+id/tvUnit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="@dimen/session_goal_unit_margin_left"
+            android:layout_toEndOf="@id/etInput"
+            android:fontFamily="@font/sf_ui_display_bold"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/session_goal_unit_text_size"
+            tools:text="text" />
+
+        <ImageView
+            android:id="@+id/ivIcon"
+            android:layout_width="@dimen/session_goal_image_size"
+            android:layout_height="@dimen/session_goal_image_size"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            tools:src="@drawable/goal" />
+
+    </RelativeLayout>
+
+</merge>

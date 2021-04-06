@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.AboutFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimaryDark"
+        android:orientation="vertical"
+        android:padding="@dimen/activity_padding">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/card_margin_bottom"
+            android:fontFamily="@font/sf_ui_display_bold"
+            android:text="@string/about"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/title_text_size" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/card_margin_bottom"
+            android:fontFamily="@font/sf_ui_display_regular"
+            android:text="@string/description_application_for_capturing_swimming_activity_in_a_swimming_pool"
+            android:textColor="@color/white"
+            android:textSize="@dimen/info_text_size" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/card_margin_bottom"
+            android:fontFamily="@font/sf_ui_display_regular"
+            android:text="@string/developer"
+            android:textColor="@color/white"
+            android:textSize="@dimen/info_text_size" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/card_margin_bottom"
+            android:fontFamily="@font/sf_ui_display_regular"
+            android:text="@string/company"
+            android:textColor="@color/white"
+            android:textSize="@dimen/info_text_size" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/card_margin_bottom"
+            android:fontFamily="@font/sf_ui_display_regular"
+            android:text="@string/programming_language"
+            android:textColor="@color/white"
+            android:textSize="@dimen/info_text_size" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/card_margin_bottom"
+            android:fontFamily="@font/sf_ui_display_regular"
+            android:text="@string/course"
+            android:textColor="@color/white"
+            android:textSize="@dimen/info_text_size" />
+
+    </LinearLayout>
+
+</FrameLayout>

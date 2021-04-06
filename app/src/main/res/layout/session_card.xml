@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/rlActivityCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/card_background"
+        android:padding="@dimen/session_details_padding">
+
+        <ImageView
+            android:id="@+id/ivActivityIcon"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:src="@drawable/swimming" />
+
+        <TextView
+            android:id="@+id/tvActivityTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="40dp"
+            android:layout_toEndOf="@id/ivActivityIcon"
+            android:fontFamily="@font/sf_ui_display_bold"
+            android:text="@string/swimming"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/title_text_size" />
+
+    </RelativeLayout>
+
+</merge>

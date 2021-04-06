@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    android:orientation="vertical"
+    android:padding="@dimen/activity_padding">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/sf_ui_display_bold"
+        android:text="@string/choose_activity"
+        android:textColor="@color/white"
+        android:textSize="@dimen/title_text_size" />
+
+    <hr.algebra.triathlist.components.SessionCard
+        android:id="@+id/scSwimming"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/session_card_margin_top"
+        app:activity_icon="@drawable/swimming"
+        app:activity_title="@string/swimming"
+        app:title_text_color="@color/colorAccent" />
+
+    <hr.algebra.triathlist.components.SessionCard
+        android:id="@+id/scRunning"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/session_card_margin_top"
+        app:activity_icon="@drawable/running_y"
+        app:activity_title="@string/running"
+        app:title_text_color="@color/colorAccentYellow" />
+
+    <hr.algebra.triathlist.components.SessionCard
+        android:id="@+id/scCycling"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/session_card_margin_top"
+        app:activity_icon="@drawable/cycle_w"
+        app:activity_title="@string/cycling" />
+
+</LinearLayout>

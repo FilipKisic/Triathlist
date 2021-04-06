@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorPrimaryDark"
+    android:orientation="vertical"
+    android:padding="@dimen/activity_padding">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/title_margin_bottom"
+        android:fontFamily="@font/sf_ui_display_bold"
+        android:text="@string/new_session"
+        android:textColor="@color/white"
+        android:textSize="@dimen/title_text_size" />
+
+    <hr.algebra.triathlist.components.SessionGoalCard
+        android:id="@+id/sgcGoalRepKilometers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:unit_text_color="@color/colorAccent"
+        app:unit="kilometers"/>
+
+
+    <hr.algebra.triathlist.components.SessionGoalCard
+        android:id="@+id/sgcGoalCyclingPause"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:icon="@drawable/pause"
+        app:unit="minutes"
+        app:unit_text_color="@color/colorAccentYellow" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <hr.algebra.triathlist.components.ActionButton
+            android:id="@+id/btnCyclingStart"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="wrap_content"
+            app:background_color="@drawable/button_background_yellow"
+            app:button_text="@string/start" />
+
+        <hr.algebra.triathlist.components.ActionButton
+            android:id="@+id/btnCyclingCancel"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            app:background_color="@drawable/button_background_blue"
+            app:button_text="@string/cancel" />
+
+    </RelativeLayout>
+
+</LinearLayout>
