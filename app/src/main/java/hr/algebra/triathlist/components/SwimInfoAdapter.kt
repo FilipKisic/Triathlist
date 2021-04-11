@@ -1,7 +1,6 @@
 package hr.algebra.triathlist.components
 
 import android.app.AlertDialog
-import android.content.ContentUris
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -9,11 +8,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import hr.algebra.triathlist.R
-import hr.algebra.triathlist.dal.TRIATHLIST_PROVIDER_CONTENT_URI
-import hr.algebra.triathlist.model.SwimInfo
+import hr.algebra.triathlist.database.TriathlistDatabase
+import hr.algebra.triathlist.model.Activity
 import kotlinx.android.synthetic.main.swim_info_card.view.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
-class SwimInfoAdapter(private val swimInfoList: MutableList<SwimInfo>, private val context: Context) :
+class SwimInfoAdapter(private val swimInfoList: MutableList<Activity>, private val context: Context) :
     RecyclerView.Adapter<SwimInfoAdapter.SwimInfoViewHolder>() {
 
     inner class SwimInfoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -34,7 +35,7 @@ class SwimInfoAdapter(private val swimInfoList: MutableList<SwimInfo>, private v
         val currentInfo = swimInfoList[position]
         holder.dayOfWeek.text = currentInfo.dayOfWeek
         holder.lapCount.text = if (currentInfo.laps != 1) "${currentInfo.laps} laps" else "${currentInfo.laps} lap"
-        holder.time.text = currentInfo.totalTime
+        holder.time.text = currentInfo.duration.toString()
         holder.distance.text = "${currentInfo.distance} m"
         holder.itemView.setOnLongClickListener {
             showMessage(position)
@@ -54,7 +55,10 @@ class SwimInfoAdapter(private val swimInfoList: MutableList<SwimInfo>, private v
 
     private fun deleteItem(position: Int) {
         val item = swimInfoList[position]
-        context.contentResolver.delete(ContentUris.withAppendedId(TRIATHLIST_PROVIDER_CONTENT_URI, item._id), null, null)
+        val db = TriathlistDatabase.getDatabase(context)
+        GlobalScope.launch {
+            db.activityDao().deleteById(item.idActivity)
+        }
         swimInfoList.removeAt(position)
         notifyDataSetChanged()
     }

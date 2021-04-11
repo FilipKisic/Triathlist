@@ -1,3 +1,8 @@
 package hr.algebra.triathlist.model
 
-data class SwimInfo(var _id: Long, val dayOfWeek: String, val laps: Int, val totalTime: String, val distance: Int)
+import androidx.room.Entity
+
+@Entity(tableName = "swim_info")
+data class SwimInfo(
+    val laps: Int
+)

@@ -60,6 +60,13 @@
         android:layout_marginTop="@dimen/input_spacing"
         app:placeholder="@string/weight" />
 
+    <hr.algebra.triathlist.components.InfoTextView
+        android:id="@+id/itvRegisterAge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/input_spacing"
+        app:placeholder="@string/age" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -15,12 +15,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <provider
-            android:name="hr.algebra.triathlist.dal.SwimInfoProvider"
-            android:authorities="hr.algebra.triathlist.dal.provider"
-            android:enabled="true"
-            android:exported="false" />
-
         <receiver
             android:name="hr.algebra.triathlist.services.WeatherReceiver"
             android:enabled="true"

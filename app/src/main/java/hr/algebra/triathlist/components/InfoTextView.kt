@@ -20,6 +20,6 @@ class InfoTextView @JvmOverloads constructor(
         val typedArray: TypedArray? = context.theme.obtainStyledAttributes(attrs, R.styleable.InfoTextView, 0, 0)
         placeholder = typedArray?.getString(R.styleable.InfoTextView_placeholder) ?: "Placeholder"
 
-        etInfo.setText(placeholder)
+        etInfo.hint = placeholder
     }
 }

@@ -2,6 +2,7 @@ package hr.algebra.triathlist.fragments
 
 import android.graphics.Color
 import android.graphics.Typeface
+import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -9,15 +10,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import hr.algebra.triathlist.MenuActivity
 import hr.algebra.triathlist.R
 import hr.algebra.triathlist.components.SwimInfoAdapter
-import hr.algebra.triathlist.dal.TRIATHLIST_PROVIDER_CONTENT_URI
+import hr.algebra.triathlist.database.TriathlistDatabase
 import hr.algebra.triathlist.framework.startActivity
-import hr.algebra.triathlist.model.SwimInfo
+import hr.algebra.triathlist.model.Activity
 import kotlinx.android.synthetic.main.fragment_session_list.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class SessionListFragment : Fragment() {
 
@@ -25,6 +30,7 @@ class SessionListFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_session_list, container, false)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initListeners()
@@ -41,24 +47,18 @@ class SessionListFragment : Fragment() {
         }
     }
 
-    private fun collectSessionsFromDatabase(): MutableList<SwimInfo> {
-        val list = ArrayList<SwimInfo>()
-        val cursor = context?.contentResolver?.query(TRIATHLIST_PROVIDER_CONTENT_URI, null, null, null, "${SwimInfo::_id.name} DESC")
-        while (cursor != null && cursor.moveToNext()) {
-            list.add(
-                SwimInfo(
-                    cursor.getInt(cursor.getColumnIndex("_id")).toLong(),
-                    cursor.getString(cursor.getColumnIndex("dayOfWeek")),
-                    cursor.getInt(cursor.getColumnIndex("laps")),
-                    cursor.getString(cursor.getColumnIndex("totalTime")),
-                    cursor.getInt(cursor.getColumnIndex("distance"))
-                )
-            )
+    //ASK
+    private fun collectSessionsFromDatabase(): MutableList<Activity> = runBlocking {
+        var list: MutableList<Activity>? = null
+        val db = TriathlistDatabase.getDatabase(requireActivity().applicationContext)
+        val job = GlobalScope.launch {
+            list = db.activityDao().getAllActivities()
         }
-        if (list.isEmpty()) {
+        job.join()
+        return@runBlocking if (list.isNullOrEmpty()) {
             showEmptyListMessage()
-        }
-        return list
+            ArrayList()
+        } else list!!
     }
 
     private fun showEmptyListMessage() {

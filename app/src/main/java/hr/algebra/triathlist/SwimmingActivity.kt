@@ -1,28 +1,31 @@
 package hr.algebra.triathlist
 
-import android.content.ContentValues
 import android.os.Build
 import android.os.Bundle
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.github.nisrulz.sensey.Sensey
-import hr.algebra.triathlist.dal.TRIATHLIST_PROVIDER_CONTENT_URI
+import hr.algebra.triathlist.database.TriathlistDatabase
 import hr.algebra.triathlist.framework.startPreviousActivity
-import hr.algebra.triathlist.model.SwimInfo
+import hr.algebra.triathlist.model.Activity
+import hr.algebra.triathlist.model.ActivityType
 import kotlinx.android.synthetic.main.action_button.view.*
 import kotlinx.android.synthetic.main.activity_session.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import timerx.Stopwatch
 import timerx.StopwatchBuilder
 import timerx.Timer
 import timerx.TimerBuilder
-import java.io.Serializable
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
 import java.util.*
 import java.util.concurrent.TimeUnit
 
 private lateinit var buttonState: String
 private lateinit var stopwatch: Stopwatch
 private lateinit var timer: Timer
+private lateinit var timeOfStart: LocalDateTime
 
 class SwimmingActivity : AppCompatActivity() {
     private var goalDistance = 0
@@ -48,12 +51,14 @@ class SwimmingActivity : AppCompatActivity() {
         timer.stop()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun initData() {
         refreshData()
         showData()
         initStopwatchAndTimer()
         pb_swim_goal.progress = 0
         buttonState = btnStartStop.buttonText
+        timeOfStart = LocalDateTime.now()
     }
 
     private fun refreshData() {
@@ -163,12 +168,20 @@ class SwimmingActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun saveInDatabase() {
         val dayOfWeekFormat = SimpleDateFormat("EEEE", Locale.ENGLISH)
-        val values = ContentValues().apply {
-            put(SwimInfo::dayOfWeek.name, dayOfWeekFormat.format(Date()).toString())
-            put(SwimInfo::laps.name, laps)
-            put(SwimInfo::totalTime.name, tvStopwatch.text.toString())
-            put(SwimInfo::distance.name, currentDistance)
+        val db = TriathlistDatabase.getDatabase(this)
+        val activity = Activity(
+            tvStopwatch.text.toString(),
+            null,
+            currentDistance,
+            laps,
+            null,
+            dayOfWeekFormat.format(Date()).toString(),
+            timeOfStart,
+            LocalDateTime.now(),
+            ActivityType.SWIMMING
+        )
+        GlobalScope.launch {
+            db.activityDao().insert(activity)
         }
-        contentResolver.insert(TRIATHLIST_PROVIDER_CONTENT_URI, values)
     }
 }

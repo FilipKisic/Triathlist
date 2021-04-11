@@ -8,7 +8,9 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import hr.algebra.triathlist.components.InfoTextView
 import hr.algebra.triathlist.components.SessionGoalCard
+import kotlinx.android.synthetic.main.info_text_view.view.*
 import kotlinx.android.synthetic.main.session_goal_card.view.*
 
 const val CLASS = "Class"
@@ -45,9 +47,25 @@ fun Context.isOnline(): Boolean {
     return false
 }
 
-fun SessionGoalCard.isValid(context: Context, unit: String): Boolean{
-    if(this.etInput.text.toString().toInt() <= 0){
+fun SessionGoalCard.isValid(context: Context, unit: String): Boolean {
+    if (this.etInput.text.toString().toInt() <= 0) {
         Toast.makeText(context, "$unit value must be greater than 0", Toast.LENGTH_LONG).show()
+        return false
+    }
+    return true
+}
+
+fun InfoTextView.isValid(context: Context, property: String): Boolean {
+    if (this.etInfo.text.toString().isBlank()) {
+        Toast.makeText(context, "$property value must not be empty", Toast.LENGTH_LONG).show()
+        return false
+    }
+    return true
+}
+
+fun InfoTextView.isNumberValid(context: Context, property: String): Boolean {
+    if (this.etInfo.text.toString().toIntOrNull() == null) {
+        Toast.makeText(context, "$property value must be a number", Toast.LENGTH_LONG).show()
         return false
     }
     return true
