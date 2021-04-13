@@ -28,10 +28,8 @@ class LoginActivity : AppCompatActivity() {
     private fun initListeners() {
         btnLoginActivity.setOnClickListener {
             if (areFieldsValid() && isUserAuthenticated()) {
-                println("################################# GOT IN")
                 startActivity<SplashScreenActivity>()
-            }
-            else Toast.makeText(this, "User does not exist", Toast.LENGTH_LONG).show()
+            } else Toast.makeText(this, "User does not exist", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -42,6 +40,7 @@ class LoginActivity : AppCompatActivity() {
         return isValid
     }
 
+    //ASK
     private fun isUserAuthenticated(): Boolean = runBlocking {
         val db = TriathlistDatabase.getDatabase(applicationContext)
         val job = GlobalScope.launch {

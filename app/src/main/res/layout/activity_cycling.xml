@@ -15,7 +15,7 @@
         android:padding="@dimen/activity_padding">
 
         <ProgressBar
-            android:id="@+id/pb_swim_goal"
+            android:id="@+id/pb_cycling_goal"
             android:layout_width="320dp"
             android:layout_height="320dp"
             android:indeterminateOnly="false"
@@ -30,13 +30,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/cycle"
-            app:layout_constraintBottom_toBottomOf="@+id/pb_swim_goal"
-            app:layout_constraintEnd_toEndOf="@+id/pb_swim_goal"
-            app:layout_constraintStart_toStartOf="@+id/pb_swim_goal"
-            app:layout_constraintTop_toTopOf="@+id/pb_swim_goal" />
+            app:layout_constraintBottom_toBottomOf="@+id/pb_cycling_goal"
+            app:layout_constraintEnd_toEndOf="@+id/pb_cycling_goal"
+            app:layout_constraintStart_toStartOf="@+id/pb_cycling_goal"
+            app:layout_constraintTop_toTopOf="@+id/pb_cycling_goal" />
 
         <TextView
-            android:id="@+id/tvStopwatch"
+            android:id="@+id/tvCyclingStopwatch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/sf_ui_display_bold"
@@ -44,7 +44,7 @@
             android:text="@string/start_time"
             android:textColor="@color/white"
             android:textSize="@dimen/info_time_text_size"
-            app:layout_constraintTop_toBottomOf="@+id/pb_swim_goal"
+            app:layout_constraintTop_toBottomOf="@+id/pb_cycling_goal"
             tools:layout_editor_absoluteX="20dp" />
 
         <LinearLayout
@@ -54,7 +54,7 @@
             android:background="@drawable/card_background"
             android:orientation="vertical"
             android:padding="@dimen/session_details_padding"
-            app:layout_constraintTop_toBottomOf="@+id/tvStopwatch"
+            app:layout_constraintTop_toBottomOf="@+id/tvCyclingStopwatch"
             tools:layout_editor_absoluteX="20dp">
 
             <RelativeLayout
@@ -71,7 +71,7 @@
                     android:textSize="@dimen/goal_value_text_size" />
 
                 <TextView
-                    android:id="@+id/tvTotalLength"
+                    android:id="@+id/tvCyclingTotalDistance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -90,36 +90,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sf_ui_display_bold"
-                    android:text="@string/calories"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/goal_value_text_size" />
-
-                <TextView
-                    android:id="@+id/tvLaps"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:fontFamily="@font/sf_ui_display_bold"
-                    android:text="@string/start_lap"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="@dimen/goal_value_text_size" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/card_margin_bottom">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/sf_ui_display_bold"
                     android:text="@string/to_go"
                     android:textColor="@color/white"
                     android:textSize="@dimen/goal_value_text_size" />
 
                 <TextView
-                    android:id="@+id/tvToGo"
+                    android:id="@+id/tvCyclingToGo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -143,7 +119,7 @@
                     android:textSize="@dimen/goal_value_text_size" />
 
                 <TextView
-                    android:id="@+id/tvPause"
+                    android:id="@+id/tvCyclingPause"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -161,7 +137,7 @@
             tools:layout_editor_absoluteX="20dp">
 
             <hr.algebra.triathlist.components.ActionButton
-                android:id="@+id/btnStartStop"
+                android:id="@+id/btnStartStopCycling"
                 android:layout_width="@dimen/button_width"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/button_margin_top"
@@ -169,7 +145,7 @@
                 app:button_text="@string/start" />
 
             <hr.algebra.triathlist.components.ActionButton
-                android:id="@+id/btnFinish"
+                android:id="@+id/btnFinishCycling"
                 android:layout_width="@dimen/button_width"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/finish_margin_start"

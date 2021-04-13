@@ -27,7 +27,7 @@ class NewCyclingSessionActivity : AppCompatActivity() {
 
     private fun startSession() {
         val intent = Intent(this, CyclingActivity::class.java).apply {
-            putExtra("repDistance", sgcGoalRepKilometers.etInput.text.toString().toInt())
+            putExtra("goalDistance", sgcGoalRepKilometers.etInput.text.toString().toInt())
             putExtra("pause", sgcGoalCyclingPause.etInput.text.toString().toInt())
         }
         startActivity(intent)

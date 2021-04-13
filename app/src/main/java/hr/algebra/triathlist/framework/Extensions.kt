@@ -1,5 +1,7 @@
 package hr.algebra.triathlist.framework
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -8,12 +10,19 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import hr.algebra.triathlist.R
 import hr.algebra.triathlist.components.InfoTextView
 import hr.algebra.triathlist.components.SessionGoalCard
+import hr.algebra.triathlist.fusedLocationClient
+import hr.algebra.triathlist.services.lat
+import hr.algebra.triathlist.services.long
 import kotlinx.android.synthetic.main.info_text_view.view.*
 import kotlinx.android.synthetic.main.session_goal_card.view.*
+import pub.devrel.easypermissions.AfterPermissionGranted
+import pub.devrel.easypermissions.EasyPermissions
 
 const val CLASS = "Class"
+const val ACTIVITY_REQUEST_CODE = 65
 
 inline fun <reified T : Activity> Context.startActivity() = Intent(this, T::class.java).apply {
     addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)

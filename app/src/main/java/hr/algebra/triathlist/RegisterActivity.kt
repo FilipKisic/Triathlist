@@ -26,7 +26,6 @@ class RegisterActivity : AppCompatActivity() {
         btnRegisterActivity.setOnClickListener {
             if (areFieldsValid()) {
                 registerUser()
-                println("################################# ALL GOOD")
                 startActivity<SplashScreenActivity>()
             }
         }

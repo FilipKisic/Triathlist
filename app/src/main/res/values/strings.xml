@@ -52,7 +52,7 @@
     <string name="swimming">Swimming</string>
     <string name="running">Running</string>
     <string name="cycling">Cycling</string>
-    <string name="repetitions">Repetitions:</string>
     <string name="calories">Calories:</string>
     <string name="age">Age</string>
+    <string name="steps">Steps:</string>
 </resources>
