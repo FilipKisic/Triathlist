@@ -1,9 +1,6 @@
 package hr.algebra.triathlist.dao
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import hr.algebra.triathlist.model.User
 
 @Dao
@@ -12,7 +9,7 @@ interface UserDao {
     @Query("SELECT * FROM user")
     fun getAllUsers(): MutableList<User>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertUser(user: User)
 
     @Query("SELECT * FROM user WHERE email = :email AND password = :password")

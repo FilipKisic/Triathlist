@@ -22,6 +22,7 @@
             android:orientation="horizontal">
 
             <ImageView
+                android:id="@+id/ivActivity"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/swim_image_size"
                 android:layout_gravity="center"
@@ -40,6 +41,7 @@
                 tools:text="Tuesday" />
 
             <ImageView
+                android:id="@+id/ivMetricIcon"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/image_size"
                 android:layout_gravity="center"

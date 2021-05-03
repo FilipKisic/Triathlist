@@ -1,82 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
-    android:orientation="vertical"
-    android:padding="@dimen/activity_padding">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/sf_ui_display_bold"
-        android:text="@string/register_here"
-        android:textColor="@color/white"
-        android:textSize="@dimen/title_text_size" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/login_message_margin_top"
-        android:fontFamily="@font/sf_ui_display_regular"
-        android:text="@string/register_greeting"
-        android:textColor="@color/white"
-        android:textSize="@dimen/subtitle_text_size" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/sf_ui_display_regular"
-        android:text="@string/register_message"
-        android:textColor="@color/white"
-        android:textSize="@dimen/subtitle_text_size" />
-
-    <hr.algebra.triathlist.components.InfoTextView
-        android:id="@+id/itvRegisterEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/input_margin_top"
-        app:placeholder="@string/email" />
-
-    <hr.algebra.triathlist.components.InfoTextView
-        android:id="@+id/itvRegisterPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/input_spacing"
-        app:placeholder="@string/password" />
-
-    <hr.algebra.triathlist.components.InfoTextView
-        android:id="@+id/itvRegisterHeight"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/input_spacing"
-        app:placeholder="@string/height" />
-
-    <hr.algebra.triathlist.components.InfoTextView
-        android:id="@+id/itvRegisterWeight"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/input_spacing"
-        app:placeholder="@string/weight" />
-
-    <hr.algebra.triathlist.components.InfoTextView
-        android:id="@+id/itvRegisterAge"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/input_spacing"
-        app:placeholder="@string/age" />
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="bottom">
+        android:background="@color/colorPrimaryDark"
+        android:orientation="vertical"
+        android:padding="@dimen/activity_padding">
 
-        <hr.algebra.triathlist.components.ActionButton
-            android:id="@+id/btnRegisterActivity"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:button_text="@string/register" />
+            android:fontFamily="@font/sf_ui_display_bold"
+            android:text="@string/register_here"
+            android:textColor="@color/white"
+            android:textSize="@dimen/title_text_size" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/login_message_margin_top"
+            android:fontFamily="@font/sf_ui_display_regular"
+            android:text="@string/register_greeting"
+            android:textColor="@color/white"
+            android:textSize="@dimen/subtitle_text_size" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sf_ui_display_regular"
+            android:text="@string/register_message"
+            android:textColor="@color/white"
+            android:textSize="@dimen/subtitle_text_size" />
+
+        <hr.algebra.triathlist.components.InfoTextView
+            android:id="@+id/itvRegisterEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/input_margin_top"
+            app:placeholder="@string/email" />
+
+        <hr.algebra.triathlist.components.InfoTextView
+            android:id="@+id/itvRegisterPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/input_spacing"
+            app:placeholder="@string/password" />
+
+        <hr.algebra.triathlist.components.InfoTextView
+            android:id="@+id/itvRegisterHeight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/input_spacing"
+            app:placeholder="@string/height" />
+
+        <hr.algebra.triathlist.components.InfoTextView
+            android:id="@+id/itvRegisterWeight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/input_spacing"
+            app:placeholder="@string/weight" />
+
+        <hr.algebra.triathlist.components.InfoTextView
+            android:id="@+id/itvRegisterAge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/input_spacing"
+            app:placeholder="@string/age" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom">
+
+            <hr.algebra.triathlist.components.ActionButton
+                android:id="@+id/btnRegisterActivity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:button_text="@string/register" />
+        </LinearLayout>
+
     </LinearLayout>
 
-</LinearLayout>
+</ScrollView>

@@ -7,16 +7,25 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Build
 import android.os.Bundle
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import hr.algebra.triathlist.database.TriathlistDatabase
 import hr.algebra.triathlist.framework.startPreviousActivity
+import hr.algebra.triathlist.model.Activity
+import hr.algebra.triathlist.model.ActivityType
 import kotlinx.android.synthetic.main.action_button.view.*
 import kotlinx.android.synthetic.main.activity_running.*
+import kotlinx.android.synthetic.main.activity_session.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import timerx.Stopwatch
 import timerx.StopwatchBuilder
 import timerx.Timer
 import timerx.TimerBuilder
+import java.text.SimpleDateFormat
 import java.time.LocalDateTime
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 private lateinit var buttonState: String
@@ -50,6 +59,7 @@ class RunningActivity : AppCompatActivity(), SensorEventListener {
         super.onResume()
         isRunning = true
         val stepSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)
+        if (stepSensor == null) Toast.makeText(this, "No Sensor", Toast.LENGTH_LONG).show()
         sensorManager.registerListener(this, stepSensor, SensorManager.SENSOR_DELAY_UI)
     }
 
@@ -120,6 +130,7 @@ class RunningActivity : AppCompatActivity(), SensorEventListener {
         timer.stop()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun initListeners() {
         btnStartStopRunning.setOnClickListener {
             toggleState()
@@ -137,11 +148,10 @@ class RunningActivity : AppCompatActivity(), SensorEventListener {
     }
 
     override fun onSensorChanged(event: SensorEvent) {
-        println("GOT HERE")
         if (isRunning) {
             tvRunningSteps.text = "${event.values[0]}"
-            var distance = (event.values[0] * 75) / 100_000
-            println("DISTANCE: $distance")
+            steps = event.values[0].toInt()
+            currentDistance = ((event.values[0] * 75) / 100_000).toInt()
         }
     }
 
@@ -150,11 +160,12 @@ class RunningActivity : AppCompatActivity(), SensorEventListener {
         timer.start()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun finishSession() {
         pb_run_goal.progress = 100
         stopwatch.stop()
         btnStartStopRunning.tvButtonText.setText(R.string.start)
-        //saveInDatabase()
+        saveInDatabase()
         resetValues()
         startPreviousActivity<MainActivity>()
     }
@@ -167,5 +178,25 @@ class RunningActivity : AppCompatActivity(), SensorEventListener {
         repetitions = 0
         pause = 0
         pb_run_goal.progress = 0
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun saveInDatabase() {
+        val dayOfWeekFormat = SimpleDateFormat("EEEE", Locale.ENGLISH)
+        val db = TriathlistDatabase.getDatabase(this)
+        val activity = Activity(
+            tvRunStopwatch.text.toString(),
+            null,
+            currentDistance,
+            null,
+            steps,
+            dayOfWeekFormat.format(Date()).toString(),
+            timeOfStart,
+            LocalDateTime.now(),
+            ActivityType.RUNNING
+        )
+        GlobalScope.launch {
+            db.activityDao().insert(activity)
+        }
     }
 }

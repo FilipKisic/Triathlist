@@ -15,7 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import hr.algebra.triathlist.MenuActivity
 import hr.algebra.triathlist.R
-import hr.algebra.triathlist.components.SwimInfoAdapter
+import hr.algebra.triathlist.components.ActivityInfoAdapter
 import hr.algebra.triathlist.database.TriathlistDatabase
 import hr.algebra.triathlist.framework.startActivity
 import hr.algebra.triathlist.model.Activity
@@ -36,9 +36,9 @@ class SessionListFragment : Fragment() {
         initListeners()
 
         val cards = collectSessionsFromDatabase()
-        rvSwimInfoList.adapter = SwimInfoAdapter(cards, requireContext())
-        rvSwimInfoList.layoutManager = LinearLayoutManager(requireContext())
-        rvSwimInfoList.setHasFixedSize(true)
+        rvActivityList.adapter = ActivityInfoAdapter(cards, requireContext())
+        rvActivityList.layoutManager = LinearLayoutManager(requireContext())
+        rvActivityList.setHasFixedSize(true)
     }
 
     private fun initListeners() {
@@ -46,8 +46,7 @@ class SessionListFragment : Fragment() {
             startActivity<MenuActivity>()
         }
     }
-
-    //ASK
+    
     private fun collectSessionsFromDatabase(): MutableList<Activity> = runBlocking {
         var list: MutableList<Activity>? = null
         val db = TriathlistDatabase.getDatabase(requireActivity().applicationContext)
