@@ -13,18 +13,18 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.database.*
 import hr.algebra.triathlist.MenuActivity
 import hr.algebra.triathlist.R
 import hr.algebra.triathlist.components.ActivityInfoAdapter
-import hr.algebra.triathlist.database.TriathlistDatabase
 import hr.algebra.triathlist.framework.startActivity
 import hr.algebra.triathlist.model.Activity
 import kotlinx.android.synthetic.main.fragment_session_list.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 class SessionListFragment : Fragment() {
+
+    private lateinit var database: DatabaseReference
+    private lateinit var itemList: ArrayList<Activity>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_session_list, container, false)
@@ -34,9 +34,23 @@ class SessionListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initListeners()
+        database = FirebaseDatabase.getInstance().getReference("Activities")
+        itemList = ArrayList()
+        database.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
 
-        val cards = collectSessionsFromDatabase()
-        rvActivityList.adapter = ActivityInfoAdapter(cards, requireContext())
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    for (a in snapshot.children) {
+                        val activity = a.getValue(Activity::class.java)
+                        itemList.add(activity!!)
+                    }
+                    rvActivityList.adapter = ActivityInfoAdapter(itemList, requireContext())
+                }
+            }
+        })
         rvActivityList.layoutManager = LinearLayoutManager(requireContext())
         rvActivityList.setHasFixedSize(true)
     }
@@ -45,31 +59,5 @@ class SessionListFragment : Fragment() {
         ivNewSession.setOnClickListener {
             startActivity<MenuActivity>()
         }
-    }
-    
-    private fun collectSessionsFromDatabase(): MutableList<Activity> = runBlocking {
-        var list: MutableList<Activity>? = null
-        val db = TriathlistDatabase.getDatabase(requireActivity().applicationContext)
-        val job = GlobalScope.launch {
-            list = db.activityDao().getAllActivities()
-        }
-        job.join()
-        return@runBlocking if (list.isNullOrEmpty()) {
-            showEmptyListMessage()
-            ArrayList()
-        } else list!!
-    }
-
-    private fun showEmptyListMessage() {
-        val tvMessage = TextView(context).apply {
-            layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT)
-            text = getString(R.string.startMessage)
-            textSize = 20f
-            gravity = Gravity.CENTER_VERTICAL
-            textAlignment = View.TEXT_ALIGNMENT_CENTER
-            typeface = Typeface.DEFAULT_BOLD
-            setTextColor(Color.WHITE)
-        }
-        session_list.addView(tvMessage)
     }
 }

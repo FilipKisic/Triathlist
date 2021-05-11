@@ -5,14 +5,14 @@ import android.os.Bundle
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.github.nisrulz.sensey.Sensey
-import hr.algebra.triathlist.database.TriathlistDatabase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import hr.algebra.triathlist.framework.startPreviousActivity
 import hr.algebra.triathlist.model.Activity
 import hr.algebra.triathlist.model.ActivityType
 import kotlinx.android.synthetic.main.action_button.view.*
 import kotlinx.android.synthetic.main.activity_session.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import timerx.Stopwatch
 import timerx.StopwatchBuilder
 import timerx.Timer
@@ -22,12 +22,17 @@ import java.time.LocalDateTime
 import java.util.*
 import java.util.concurrent.TimeUnit
 
+
 private lateinit var buttonState: String
 private lateinit var stopwatch: Stopwatch
 private lateinit var timer: Timer
 private lateinit var timeOfStart: LocalDateTime
+private lateinit var database: FirebaseDatabase
+private lateinit var reference: DatabaseReference
+private lateinit var auth: FirebaseAuth
 
 class SwimmingActivity : AppCompatActivity() {
+
     private var goalDistance = 0
     private var currentDistance = 0
     private var laps = 0
@@ -59,6 +64,7 @@ class SwimmingActivity : AppCompatActivity() {
         pb_swim_goal.progress = 0
         buttonState = btnStartStop.buttonText
         timeOfStart = LocalDateTime.now()
+        auth = FirebaseAuth.getInstance()
     }
 
     private fun refreshData() {
@@ -148,7 +154,7 @@ class SwimmingActivity : AppCompatActivity() {
         pb_swim_goal.progress = 100
         stopwatch.stop()
         btnStartStop.tvButtonText.setText(R.string.start)
-        saveInDatabase()
+        saveToFirebase()
         resetValues()
         startPreviousActivity<MainActivity>()
     }
@@ -166,22 +172,23 @@ class SwimmingActivity : AppCompatActivity() {
     private fun toggleState() = btnStartStop.tvButtonText.setText(if (buttonState == "Start") R.string.stop else R.string.start)
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun saveInDatabase() {
+    private fun saveToFirebase() {
         val dayOfWeekFormat = SimpleDateFormat("EEEE", Locale.ENGLISH)
-        val db = TriathlistDatabase.getDatabase(this)
         val activity = Activity(
             tvStopwatch.text.toString(),
-            null,
+            0,
             currentDistance,
             laps,
-            null,
+            0,
             dayOfWeekFormat.format(Date()).toString(),
-            timeOfStart,
-            LocalDateTime.now(),
-            ActivityType.SWIMMING
+            timeOfStart.toString(),
+            LocalDateTime.now().toString(),
+            ActivityType.SWIMMING.ordinal,
+            auth.currentUser!!.email
         )
-        GlobalScope.launch {
-            db.activityDao().insert(activity)
-        }
+        database = FirebaseDatabase.getInstance()
+        reference = database.getReference("Activities")
+        val id = reference.push().key
+        reference.child(id!!).setValue(activity)
     }
 }

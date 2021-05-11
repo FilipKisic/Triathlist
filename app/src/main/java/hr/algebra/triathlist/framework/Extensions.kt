@@ -8,6 +8,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import hr.algebra.triathlist.R
@@ -64,16 +65,16 @@ fun SessionGoalCard.isValid(context: Context, unit: String): Boolean {
     return true
 }
 
-fun InfoTextView.isValid(context: Context, property: String): Boolean {
-    if (this.etInfo.text.toString().isBlank()) {
+fun EditText.isValid(context: Context, property: String): Boolean {
+    if (this.text.toString().isBlank()) {
         Toast.makeText(context, "$property value must not be empty", Toast.LENGTH_LONG).show()
         return false
     }
     return true
 }
 
-fun InfoTextView.isNumberValid(context: Context, property: String): Boolean {
-    if (this.etInfo.text.toString().toIntOrNull() == null) {
+fun EditText.isNumberValid(context: Context, property: String): Boolean {
+    if (this.text.toString().toIntOrNull() == null) {
         Toast.makeText(context, "$property value must be a number", Toast.LENGTH_LONG).show()
         return false
     }

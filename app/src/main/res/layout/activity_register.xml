@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+    <!--Was Scroll before-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -36,40 +36,33 @@
             android:textColor="@color/white"
             android:textSize="@dimen/subtitle_text_size" />
 
-        <hr.algebra.triathlist.components.InfoTextView
-            android:id="@+id/itvRegisterEmail"
+        <EditText
+            android:id="@+id/etRegisterEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/input_margin_top"
-            app:placeholder="@string/email" />
+            android:background="@drawable/card_background"
+            android:fontFamily="@font/sf_ui_display_regular"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress"
+            android:padding="@dimen/session_goal_padding"
+            android:textColor="@color/light_grey"
+            android:textColorHint="@color/light_grey"
+            android:textSize="@dimen/input_text_size" />
 
-        <hr.algebra.triathlist.components.InfoTextView
-            android:id="@+id/itvRegisterPassword"
+        <EditText
+            android:id="@+id/etRegisterPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/input_spacing"
-            app:placeholder="@string/password" />
-
-        <hr.algebra.triathlist.components.InfoTextView
-            android:id="@+id/itvRegisterHeight"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/input_spacing"
-            app:placeholder="@string/height" />
-
-        <hr.algebra.triathlist.components.InfoTextView
-            android:id="@+id/itvRegisterWeight"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/input_spacing"
-            app:placeholder="@string/weight" />
-
-        <hr.algebra.triathlist.components.InfoTextView
-            android:id="@+id/itvRegisterAge"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/input_spacing"
-            app:placeholder="@string/age" />
+            android:background="@drawable/card_background"
+            android:fontFamily="@font/sf_ui_display_regular"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:padding="@dimen/session_goal_padding"
+            android:textColor="@color/light_grey"
+            android:textColorHint="@color/light_grey"
+            android:textSize="@dimen/input_text_size" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -85,4 +78,4 @@
 
     </LinearLayout>
 
-</ScrollView>
+</LinearLayout>

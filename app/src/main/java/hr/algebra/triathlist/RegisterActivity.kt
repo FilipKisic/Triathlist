@@ -2,9 +2,11 @@ package hr.algebra.triathlist
 
 import android.os.Bundle
 import android.text.InputType
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isEmpty
-import hr.algebra.triathlist.database.TriathlistDatabase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import hr.algebra.triathlist.framework.isNumberValid
 import hr.algebra.triathlist.framework.isValid
 import hr.algebra.triathlist.framework.startActivity
@@ -15,54 +17,39 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class RegisterActivity : AppCompatActivity() {
+
+    private lateinit var auth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
+        auth = FirebaseAuth.getInstance()
         initListeners()
-        setInputTypes()
     }
 
     private fun initListeners() {
         btnRegisterActivity.setOnClickListener {
             if (areFieldsValid()) {
-                registerUser()
-                startActivity<SplashScreenActivity>()
+                val email = etRegisterEmail.text.toString()
+                val password = etRegisterPassword.text.toString()
+                createUser(email, password)
             }
         }
     }
 
-    private fun setInputTypes(){
-        itvRegisterEmail.etInfo.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
-        itvRegisterPassword.etInfo.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-        itvRegisterHeight.etInfo.inputType = InputType.TYPE_CLASS_NUMBER
-        itvRegisterWeight.etInfo.inputType = InputType.TYPE_CLASS_NUMBER
-        itvRegisterAge.etInfo.inputType = InputType.TYPE_CLASS_NUMBER
+    private fun createUser(email: String, password: String) {
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful)
+                    startActivity<SplashScreenActivity>()
+                else Toast.makeText(baseContext, "Registration failed", Toast.LENGTH_LONG).show()
+            }
     }
 
     private fun areFieldsValid(): Boolean {
         var isValid = true
-        if (!itvRegisterEmail.isValid(this, "Email")) isValid = false
-        if (!itvRegisterPassword.isValid(this, "Password")) isValid = false
-        if (!itvRegisterHeight.isNumberValid(this, "Height")) isValid = false
-        if (!itvRegisterWeight.isNumberValid(this, "Weight")) isValid = false
-        if (!itvRegisterAge.isNumberValid(this, "Age")) isValid = false
+        if (!etRegisterEmail.isValid(this, "Email")) isValid = false
+        if (!etRegisterPassword.isValid(this, "Password") && etRegisterPassword.text.length >= 6) isValid = false
         return isValid
-    }
-
-    private fun registerUser() {
-        val user = User(
-            itvRegisterEmail.etInfo.text.toString(),
-            itvRegisterPassword.etInfo.text.toString(),
-            null,
-            null,
-            null,
-            itvRegisterAge.etInfo.text.toString().toInt(),
-            itvRegisterHeight.etInfo.text.toString().toInt(),
-            itvRegisterWeight.etInfo.text.toString().toInt()
-        )
-        val db = TriathlistDatabase.getDatabase(this)
-        GlobalScope.launch {
-            db.userDao().insertUser(user)
-        }
     }
 }

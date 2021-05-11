@@ -32,19 +32,37 @@
         android:textColor="@color/white"
         android:textSize="@dimen/subtitle_text_size" />
 
-    <hr.algebra.triathlist.components.InfoTextView
-        android:id="@+id/itvLoginEmail"
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/etLoginEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/input_margin_top"
-        app:placeholder="@string/email" />
+        android:background="@drawable/card_background"
+        android:fontFamily="@font/sf_ui_display_regular"
+        android:hint="@string/email"
+        android:inputType="textEmailAddress"
+        android:padding="@dimen/session_goal_padding"
+        android:textColor="@color/light_grey"
+        android:textColorHint="@color/light_grey"
+        android:textSize="@dimen/input_text_size" />
 
-    <hr.algebra.triathlist.components.InfoTextView
-        android:id="@+id/itvLoginPassword"
+    <EditText
+        android:id="@+id/etLoginPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/input_spacing"
-        app:placeholder="@string/password" />
+        android:background="@drawable/card_background"
+        android:fontFamily="@font/sf_ui_display_regular"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        android:padding="@dimen/session_goal_padding"
+        android:textColor="@color/light_grey"
+        android:textColorHint="@color/light_grey"
+        android:textSize="@dimen/input_text_size" />
 
     <LinearLayout
         android:layout_width="match_parent"

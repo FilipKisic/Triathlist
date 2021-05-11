@@ -1,24 +1,16 @@
 package hr.algebra.triathlist.model
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import java.time.LocalDateTime
-import java.time.LocalTime
-
-@Entity(tableName = "activity")
 data class Activity(
-    var duration: String,
-    var calories: Int?,
-    var distance: Int,
-    var laps: Int?,
-    var steps: Int?,
-    var dayOfWeek: String,
-    var activityStart: LocalDateTime,
-    var activityEnd: LocalDateTime,
-    var activityType: ActivityType
-) {
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id")
-    var idActivity: Int = 0
-}
+    val duration: String? = null,
+    val calories: Int? = null,
+    val distance: Int? = null,
+    val laps: Int? = null,
+    val steps: Int? = null,
+    val dayOfWeek: String? = null,
+    val activityStart: String? = null,
+    val activityEnd: String? = null,
+    val activityType: Int? = null,
+    val userEmail: String? = null
+)
+// Null default values create a no-argument default constructor, which is needed
+// for deserialization from a DataSnapshot.

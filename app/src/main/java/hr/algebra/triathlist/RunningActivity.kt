@@ -10,15 +10,14 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import hr.algebra.triathlist.database.TriathlistDatabase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import hr.algebra.triathlist.framework.startPreviousActivity
 import hr.algebra.triathlist.model.Activity
 import hr.algebra.triathlist.model.ActivityType
 import kotlinx.android.synthetic.main.action_button.view.*
 import kotlinx.android.synthetic.main.activity_running.*
-import kotlinx.android.synthetic.main.activity_session.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import timerx.Stopwatch
 import timerx.StopwatchBuilder
 import timerx.Timer
@@ -33,6 +32,9 @@ private lateinit var stopwatch: Stopwatch
 private lateinit var timer: Timer
 private lateinit var timeOfStart: LocalDateTime
 private lateinit var sensorManager: SensorManager
+private lateinit var database: FirebaseDatabase
+private lateinit var reference: DatabaseReference
+private lateinit var auth: FirebaseAuth
 
 class RunningActivity : AppCompatActivity(), SensorEventListener {
 
@@ -48,9 +50,7 @@ class RunningActivity : AppCompatActivity(), SensorEventListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_running)
-
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
-
         initData()
         initListeners()
     }
@@ -84,6 +84,7 @@ class RunningActivity : AppCompatActivity(), SensorEventListener {
         pb_run_goal.progress = 0
         buttonState = btnStartStopRunning.buttonText
         timeOfStart = LocalDateTime.now()
+        auth = FirebaseAuth.getInstance()
     }
 
     private fun getData() {
@@ -165,7 +166,7 @@ class RunningActivity : AppCompatActivity(), SensorEventListener {
         pb_run_goal.progress = 100
         stopwatch.stop()
         btnStartStopRunning.tvButtonText.setText(R.string.start)
-        saveInDatabase()
+        saveToFirebase()
         resetValues()
         startPreviousActivity<MainActivity>()
     }
@@ -181,22 +182,23 @@ class RunningActivity : AppCompatActivity(), SensorEventListener {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun saveInDatabase() {
+    private fun saveToFirebase() {
         val dayOfWeekFormat = SimpleDateFormat("EEEE", Locale.ENGLISH)
-        val db = TriathlistDatabase.getDatabase(this)
         val activity = Activity(
             tvRunStopwatch.text.toString(),
-            null,
+            0,
             currentDistance,
-            null,
+            0,
             steps,
             dayOfWeekFormat.format(Date()).toString(),
-            timeOfStart,
-            LocalDateTime.now(),
-            ActivityType.RUNNING
+            timeOfStart.toString(),
+            LocalDateTime.now().toString(),
+            ActivityType.RUNNING.ordinal,
+            auth.currentUser!!.email
         )
-        GlobalScope.launch {
-            db.activityDao().insert(activity)
-        }
+        database = FirebaseDatabase.getInstance()
+        reference = database.getReference("Activities")
+        val id = reference.push().key
+        reference.child(id!!).setValue(activity)
     }
 }

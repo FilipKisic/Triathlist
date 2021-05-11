@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "56919216771",
+    "firebase_url": "https://triathlist-9ab80-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "triathlist-9ab80",
+    "storage_bucket": "triathlist-9ab80.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:56919216771:android:ce64ca18873269a99581b6",
+        "android_client_info": {
+          "package_name": "hr.algebra.triathlist"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "56919216771-p4tlleuqgqfnrf1b8ioiauitt037k625.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBpuYJLeBlP8LUgDsJjdKZhKiaStvbpawE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "56919216771-p4tlleuqgqfnrf1b8ioiauitt037k625.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

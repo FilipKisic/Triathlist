@@ -1,29 +1,42 @@
 package hr.algebra.triathlist
 
+import android.annotation.SuppressLint
+import android.location.Location
 import android.os.Build
 import android.os.Bundle
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import hr.algebra.triathlist.framework.startPreviousActivity
+import hr.algebra.triathlist.model.Activity
+import hr.algebra.triathlist.model.ActivityType
+import hr.algebra.triathlist.services.*
 import kotlinx.android.synthetic.main.action_button.view.*
 import kotlinx.android.synthetic.main.activity_cycling.*
-import kotlinx.android.synthetic.main.activity_running.*
 import timerx.Stopwatch
 import timerx.StopwatchBuilder
 import timerx.Timer
 import timerx.TimerBuilder
+import java.text.SimpleDateFormat
 import java.time.LocalDateTime
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 private lateinit var buttonState: String
 private lateinit var stopwatch: Stopwatch
 private lateinit var timer: Timer
 private lateinit var timeOfStart: LocalDateTime
+private lateinit var database: FirebaseDatabase
+private lateinit var reference: DatabaseReference
+private lateinit var auth: FirebaseAuth
+private lateinit var previousLocation: Location
 
 class CyclingActivity : AppCompatActivity() {
 
     private var goalDistance = 0
-    private var currentDistance = 0
+    private var currentDistance = 0f
     private var togo = 0
     private var pause = 0
 
@@ -34,6 +47,40 @@ class CyclingActivity : AppCompatActivity() {
 
         initData()
         initListeners()
+        setupLocation()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (!locationUpdateState) startLocationUpdates(fusedLocationClient)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        stopLocationUpdates(fusedLocationClient)
+    }
+
+    private fun setupLocation() {
+        createLocationCallback(::calculateDistance)
+        createLocationRequest(fusedLocationClient)
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun calculateDistance() {
+        fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+            if (location != null && ::previousLocation.isInitialized && location != previousLocation) {
+                currentDistance += previousLocation.distanceTo(location)
+                previousLocation = location
+                updateUI()
+            } else if (location != null)
+                previousLocation = location
+        }
+    }
+
+    private fun updateUI() {
+        tvCyclingTotalDistance.text = "${currentDistance.toInt()}m"
+        tvCyclingToGo.text = "${(goalDistance - currentDistance).toInt()}m"
+        pb_cycling_goal.progress = ((currentDistance / goalDistance) * 100).toInt()
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -41,19 +88,20 @@ class CyclingActivity : AppCompatActivity() {
         getData()
         showData()
         initStopwatchAndTimer()
-        pb_run_goal.progress = 0
-        buttonState = btnStartStopRunning.buttonText
+        pb_cycling_goal.progress = 0
+        buttonState = btnStartStopCycling.buttonText
         timeOfStart = LocalDateTime.now()
+        auth = FirebaseAuth.getInstance()
     }
 
     private fun getData() {
-        goalDistance = intent.getIntExtra("goalDistance", 0)
+        goalDistance = intent.getIntExtra("goalDistance", 0) * 1000
         pause = intent.getIntExtra("pause", 0)
     }
 
     private fun showData() {
         tvCyclingTotalDistance.text = currentDistance.toString()
-        tvCyclingToGo.text = togo.toString()
+        tvCyclingToGo.text = goalDistance.toString()
         tvCyclingPause.text = if (pause < 10) "0$pause:00" else "$pause:00"
     }
 
@@ -87,38 +135,61 @@ class CyclingActivity : AppCompatActivity() {
         timer.stop()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun initListeners() {
         btnStartStopCycling.setOnClickListener {
             toggleState()
-            buttonState = btnStartStopRunning.tvButtonText.text.toString()
+            buttonState = btnStartStopCycling.tvButtonText.text.toString()
             if (buttonState == "Stop") resumeSession() else pauseSession()
         }
-        btnFinishRunning.setOnClickListener {
+        btnFinishCycling.setOnClickListener {
             finishSession()
         }
     }
 
-    private fun toggleState() = btnStartStopRunning.tvButtonText.setText(if (buttonState == "Start") R.string.stop else R.string.start)
+    private fun toggleState() = btnStartStopCycling.tvButtonText.setText(if (buttonState == "Start") R.string.stop else R.string.start)
 
     private fun pauseSession() {
         stopwatch.stop()
         timer.start()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun finishSession() {
-        pb_run_goal.progress = 100
+        pb_cycling_goal.progress = 100
         stopwatch.stop()
-        btnStartStopRunning.tvButtonText.setText(R.string.start)
-        //saveInDatabase()
+        btnStartStopCycling.tvButtonText.setText(R.string.start)
+        saveToFirebase()
         resetValues()
         startPreviousActivity<MainActivity>()
     }
 
     private fun resetValues() {
         goalDistance = 0
-        currentDistance = 0
+        currentDistance = 0f
         togo = 0
         pause = 0
         pb_cycling_goal.progress = 0
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun saveToFirebase() {
+        val dayOfWeekFormat = SimpleDateFormat("EEEE", Locale.ENGLISH)
+        val activity = Activity(
+            tvCyclingStopwatch.text.toString(),
+            0,
+            currentDistance.toInt(),
+            0,
+            0,
+            dayOfWeekFormat.format(Date()).toString(),
+            timeOfStart.toString(),
+            LocalDateTime.now().toString(),
+            ActivityType.CYCLING.ordinal,
+            auth.currentUser!!.email
+        )
+        database = FirebaseDatabase.getInstance()
+        reference = database.getReference("Activities")
+        val id = reference.push().key
+        reference.child(id!!).setValue(activity)
     }
 }
